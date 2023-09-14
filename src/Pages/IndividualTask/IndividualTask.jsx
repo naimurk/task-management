@@ -1,11 +1,14 @@
 import { get, ref, remove, set } from "firebase/database";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { database } from "../../firebase/firebase.config";
+import { FetchContext } from "../../DataFetchState/DataFetchState";
 
 
 const IndividualTask = () => {
     const { id } = useParams();
+    const [fetchData , setFetchData]=useContext(FetchContext)
+   const navigate = useNavigate()
     const [loding, setLoading] = useState(false)
     const [AllUsersData, setAllUsersData] = useState([])
     const [individualTask, setIndividualTask] = useState({})
@@ -36,7 +39,7 @@ const IndividualTask = () => {
             .catch((error) => {
                 console.error(error);
             });
-    }, [])
+    }, [fetchData])
 
     // the effect work for Individual Task item
     useEffect(() => {
@@ -54,7 +57,7 @@ const IndividualTask = () => {
             .catch((error) => {
                 console.error(error);
             });
-    }, [])
+    }, [fetchData])
 
     // console.log(individualTask);
     const handleChanges = (e) => {
@@ -63,7 +66,7 @@ const IndividualTask = () => {
     }
 
     const handleSubmit = (e) => {
-        // setLoading(true)
+        setLoading(true)
         e.preventDefault()
         
         const form = e.target;
@@ -88,12 +91,16 @@ const IndividualTask = () => {
         set(ref(database, `tasks/${id}`), FormData);
         setLoading(false)
         form.reset()
+        setFetchData(!fetchData)
+        navigate("/")
     }
 
 
     // delete 
     const hanleDelete = (e) => {
         remove(ref(database, "tasks/" + id))
+        setFetchData(!fetchData)
+        navigate("/")
     }
 
     return (

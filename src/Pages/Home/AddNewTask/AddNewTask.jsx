@@ -1,13 +1,17 @@
 import { child, get, ref, set } from "firebase/database";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { database } from "../../../firebase/firebase.config";
 import { v4 as uuidv4 } from 'uuid'
+import { ProviderContext } from "../../../Provider/Provider";
+import { FetchContext } from "../../../DataFetchState/DataFetchState";
 
 
 const AddNewTask = () => {
 
     const [AllUsersData, setAllUsersData] = useState([])
     const [loding, setLoading] = useState(false)
+    
+   const [fetchData , setFetchData]=useContext(FetchContext)
 
     useEffect(() => {
         const dbRef = ref(database, "users"); // Create a reference to the "users" node
@@ -24,7 +28,7 @@ const AddNewTask = () => {
             .catch((error) => {
                 console.error(error);
             });
-    }, [])
+    }, [fetchData])
 
 
     const handleSubmit = (e) => {
@@ -50,6 +54,7 @@ const AddNewTask = () => {
         set(ref(database, 'tasks/' + task_id), FormData);
         form.reset()
         setLoading(false)
+        setFetchData(!fetchData)
     }
     // console.log(AllUsersData);
     return (

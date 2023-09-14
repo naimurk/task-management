@@ -12,23 +12,25 @@ import Main from './Layout/Main/Main';
 import Home from './Pages/Home/Home';
 import AddNewTask from './Pages/Home/AddNewTask/AddNewTask';
 import IndividualTask from './Pages/IndividualTask/IndividualTask';
+import Provider from './Provider/Provider';
+import DataFetchState from './DataFetchState/DataFetchState';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
-    children : [
+    children: [
       {
         path: "/",
-        element : <Home></Home>
+        element: <Home></Home>
       },
       {
-        path : "/addNewTask",
-        element : <AddNewTask></AddNewTask>
+        path: "/addNewTask",
+        element: <AddNewTask></AddNewTask>
       },
       {
-        path : "/specificTask/:id",
-        element : <IndividualTask></IndividualTask>
+        path: "/specificTask/:id",
+        element: <IndividualTask></IndividualTask>
       }
     ]
   },
@@ -44,6 +46,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <DataFetchState>
+      <Provider>
+        <RouterProvider router={router} />
+      </Provider>
+    </DataFetchState>
   </React.StrictMode>,
 )

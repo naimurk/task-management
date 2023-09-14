@@ -2,13 +2,16 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, database } from "../../firebase/firebase.config";
 import { ref, set } from "firebase/database";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { FetchContext } from "../../DataFetchState/DataFetchState";
 
 
 const SignUp = () => {
     const location = useLocation()
     const navigate = useNavigate();
     let from = location.state?.from?.pathname || "/login";
-    
+    const [fetchData , setFetchData]=useContext(FetchContext)
+
     const handleSignUP = (e) => {
 
         e.preventDefault()
@@ -29,6 +32,7 @@ const SignUp = () => {
                     id: user?.uid,
                     name: name,
                   });
+                  setFetchData(!fetchData)
 
                   form.reset()
                   navigate(from, { replace: true })

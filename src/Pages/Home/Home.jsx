@@ -1,16 +1,20 @@
 import { Link } from "react-router-dom";
 import TaskCard from "../../Component/TaskCard/TaskCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { get, ref } from "firebase/database";
 import { database } from "../../firebase/firebase.config";
+import { FetchContext } from "../../DataFetchState/DataFetchState";
+import { ProviderContext } from "../../Provider/Provider";
 
 
 const Home = () => {
     const [AlltaskData, setAllTaskData] = useState([])
     const [loading, setLoading] = useState(true)
-    const [todoData,setTodoData]=useState([])
-    const [progressData,setprogressData]=useState([])
-    const [doneData,setTodoneData]=useState([])
+    const [todoData, setTodoData] = useState([])
+    const [progressData, setprogressData] = useState([])
+    const [doneData, setTodoneData] = useState([])
+    const [fetchData, setFetchData] = useContext(FetchContext)
+    const { user } = useContext(ProviderContext)
 
     useEffect(() => {
         const dbRef = ref(database, "tasks"); // Create a reference to the "users" node
@@ -27,17 +31,33 @@ const Home = () => {
             .catch((error) => {
                 console.error(error);
             });
-    }, [])
+    }, [fetchData])
     //  console.log(AlltaskData);
     useEffect(() => {
-        const todoDatas = AlltaskData && AlltaskData.filter(item => item.status == "todo")
-        const progressDatas = AlltaskData && AlltaskData.filter(item => item.status == "progress")
-        const doneDatas = AlltaskData && AlltaskData.filter(item => item.status == "done")
+        const todoDatas = AlltaskData && AlltaskData.filter(item =>{
+            const todo = item.status == "todo" && item.assigned_user == user?.email;
+            if (todo) {
+                return todo
+            }
+        })
+        const progressDatas = AlltaskData && AlltaskData.filter(item => {
+            const progress = item.status == "progress" && item.assigned_user == user?.email;
+            if (progress) {
+                return progress
+            }
+
+        })
+        const doneDatas = AlltaskData && AlltaskData.filter(item => {
+            const done = item.status == "done" && item.assigned_user == user?.email;
+            if (done) {
+                return done
+            }
+        })
         setTodoData(todoDatas)
         setprogressData(progressDatas)
         setTodoneData(doneDatas)
         setLoading(false)
-    }, [AlltaskData])
+    }, [AlltaskData, fetchData])
     // console.log(todoData);
     // console.log(progressData);
     // console.log(doneData);
@@ -93,7 +113,7 @@ const Home = () => {
 
                     <div className=" border">
                         {/* <p className="text-white font-semibold  bg-purple-500 px-5 py-2 ">To do</p> */}
-                        <Link to={"/addNewTask"}><button className="btn bg-green-400 w-full">Add New Task +</button></Link>
+                        <Link to={user?.email ? "/addNewTask" : "/login"}><button className="btn bg-green-400 w-full">Add New Task +</button></Link>
 
                     </div>
 
