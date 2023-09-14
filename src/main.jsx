@@ -11,6 +11,7 @@ import Login from './Pages/Login/Login';
 import Main from './Layout/Main/Main';
 import Home from './Pages/Home/Home';
 import AddNewTask from './Pages/Home/AddNewTask/AddNewTask';
+import IndividualTask from './Pages/IndividualTask/IndividualTask';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path : "/addNewTask",
         element : <AddNewTask></AddNewTask>
+      },
+      {
+        path : "/specificTask/:id",
+        element : <IndividualTask></IndividualTask>
       }
     ]
   },

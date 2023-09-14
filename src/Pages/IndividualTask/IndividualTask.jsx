@@ -1,13 +1,14 @@
-import { child, get, ref, set } from "firebase/database";
+import { get, ref } from "firebase/database";
 import { useEffect, useState } from "react";
-import { database } from "../../../firebase/firebase.config";
-import { v4 as uuidv4 } from 'uuid'
+import { useParams } from "react-router-dom";
+import { database } from "../../firebase/firebase.config";
 
 
-const AddNewTask = () => {
-
+const IndividualTask = () => {
+    const {id}= useParams();
+    const [loding,setLoading]=useState(false)
     const [AllUsersData, setAllUsersData] = useState([])
-    const [loding, setLoading] = useState(false)
+    const [individualTask , setIndividualTask]=useState(null)
 
     useEffect(() => {
         const dbRef = ref(database, "users"); // Create a reference to the "users" node
@@ -26,38 +27,29 @@ const AddNewTask = () => {
             });
     }, [])
 
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        setLoading(true)
-        const form = e.target;
-        const title = form.title.value;
-        const description = form.description.value;
-        const status = form.status.value;
-        const assigned_user = form.assigned_user.value;
-        const deadline = form.date.value;
-
-        const task_id = uuidv4()
-        const FormData = {
-            assigned_user,
-            deadline,
-            description,
-            status,
-            title,
-            id: task_id
-        }
-        // console.log(FormData, task_id);
-        set(ref(database, 'tasks/' + task_id), FormData);
-        form.reset()
-        setLoading(false)
-    }
-    // console.log(AllUsersData);
+    useEffect(() => {
+        const dbRef = ref(database, `tasks/${id}`); // Create a reference to the "users" node
+        get(dbRef)
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    // console.log(data);
+                    setIndividualTask(data);
+                } else {
+                    console.log("No data available");
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, [])
+    console.log(individualTask);
     return (
         <div className="min-h-screen  bg-purple-300 bg-opacity-10  flex flex-col justify-center items-center">
 
             {
-                loding ? <span className="loading loading-bars loading-lg"></span> : <form onSubmit={handleSubmit} className=" mt-12  w-1/2 py-16 px-5 shadow-xl rounded-2xl gap-y-3 border bg-white   flex flex-col justify-center items-center" action="">
-                    <h1 className="text-4xl  mb-5">Create a task</h1>
+                loding ? <span className="loading loading-bars loading-lg"></span> : <form  className=" mt-12  w-1/2 py-16 px-5 shadow-xl rounded-2xl gap-y-3 border bg-white   flex flex-col justify-center items-center" action="">
+                    <h1 className="text-4xl  mb-5">Edit a task</h1>
                     {/* input field */}
                     <div className="form-control w-full">
                         <label className="label">
@@ -137,4 +129,4 @@ const AddNewTask = () => {
     );
 };
 
-export default AddNewTask;
+export default IndividualTask;
