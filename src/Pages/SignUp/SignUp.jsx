@@ -64,7 +64,7 @@ const SignUp = () => {
             error ? <p className="text-2xl">{error}</p>  :  <div className="min-h-screen w-full   flex flex-col justify-center items-center">
 
             {
-                loading ? <span className="loading loading-bars loading-lg"></span> : <form onSubmit={handleSignUP} className=" w-1/4 py-16 px-5 shadow-xl rounded-2xl gap-y-3 border bg-white   flex flex-col justify-center items-center" action="">
+                loading ? <span className="loading loading-bars loading-lg"></span> : <form onSubmit={handleSignUP} className=" w-full lg:w-1/4 py-16 px-5 shadow-xl rounded-2xl gap-y-3 border bg-white   flex flex-col justify-center items-center" action="">
                 <h1 className="text-4xl  mb-5">Register Now</h1>
                 {/* input field */}
                 <div className="form-control w-full">

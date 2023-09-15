@@ -65,7 +65,7 @@ const IndividualTask = () => {
 
     // console.log(individualTask);
     const handleChanges = (e) => {
-        
+
         setFormData({ ...formData, [e.target.name]: e.target.value })
         // console.log(formData);
     }
@@ -111,7 +111,7 @@ const IndividualTask = () => {
     return (
         <div className="min-h-screen  bg-purple-300 bg-opacity-10  flex flex-col justify-center items-center">
 
-            <div className="mt-12 w-full lg:w-1/2 py-16 px-5 shadow-xl rounded-2xl gap-y-3 border bg-white">
+            <div className="lg:mt-12 w-full lg:w-1/2 py-16 px-5 shadow-xl rounded-2xl gap-y-3 border bg-white">
                 {
                     loding ? <span className="loading loading-bars loading-lg"></span> : <form onSubmit={handleSubmit} className=" w-full   flex flex-col justify-center items-center" action="">
                         <h1 className="text-4xl  mb-5">Edit a task</h1>
@@ -158,7 +158,7 @@ const IndividualTask = () => {
 
                                 </label>
                                 <select onChange={handleChanges} defaultValue={individualTask?.assigned_user} name="assigned_user" className="select select-bordered w-full max-w-xs">
-
+                                <option disabled selected>Select user</option>
                                     {
                                         AllUsersData && AllUsersData.map(item => <option
                                             key={item.id}
