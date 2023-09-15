@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import TaskCard from "../../Component/TaskCard/TaskCard";
 import { useContext, useEffect, useState } from "react";
 import { get, ref } from "firebase/database";
@@ -62,14 +62,14 @@ const Home = () => {
     // console.log(progressData);
     // console.log(doneData);
     return (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center px-3 items-center">
 
             {
-                loading ? <span className="loading loading-bars loading-lg"></span> : <div className="grid text-center mt-12 w-2/3 grid-cols-4 justify-center items-start gap-5">
+                loading ? <span className="loading loading-bars loading-lg"></span> : <div className="grid text-center mt-12 w-full lg:w-2/3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center items-start gap-5">
                     {/* to do part */}
-                    <div className="w-full border overflow-y-scroll h-[600px]">
+                    <div className="w-full my-4 border-2 overflow-y-scroll h-[400px]">
                         <p className="text-white font-semibold  bg-purple-500 px-5 py-2 ">To do</p>
-                        <div className="px-3">
+                        <div className="px-3 ">
                             {
                                 todoData && todoData.map(item => <TaskCard
                                     key={item.id}
@@ -82,7 +82,7 @@ const Home = () => {
 
                         </div>
                     </div>
-                    <div className="w-full border overflow-y-scroll h-[600px]">
+                    <div className="w-full my-4 border overflow-y-scroll h-[400px]">
                         <p className="text-white font-semibold  bg-blue-500 px-5 py-2 ">In progress</p>
                         <div className="px-3">
                             {
@@ -96,7 +96,7 @@ const Home = () => {
                             }
                         </div>
                     </div>
-                    <div className="w-full border overflow-y-scroll h-[600px]">
+                    <div className="w-full my-4 border overflow-y-scroll h-[400px]">
                         <p className="text-white font-semibold  bg-orange-500 px-5 py-2 ">Done</p>
                         <div className="px-3">
                             {
@@ -111,9 +111,9 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className=" border">
+                    <div className=" my-4 border">
                         {/* <p className="text-white font-semibold  bg-purple-500 px-5 py-2 ">To do</p> */}
-                        <Link to={user?.email ? "/addNewTask" : "/login"}><button className="btn bg-green-400 w-full">Add New Task +</button></Link>
+                        <NavLink  to={user?.email ? "/addNewTask" : "/login"}><button className="btn bg-green-400 w-full">Add New Task +</button></NavLink>
 
                     </div>
 

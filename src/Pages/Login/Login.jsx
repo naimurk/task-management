@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 
 const Login = () => {
@@ -8,8 +9,11 @@ const Login = () => {
     const location = useLocation()
     const navigate = useNavigate();
     let from = location.state?.from?.pathname || "/";
+    const [error, setError] = useState("")
+    const [loading, setLoading]=useState(false)
 
     const handleLogin = (e) => {
+        setLoading(true)
         e.preventDefault()
         const form = e.target;
 
@@ -20,46 +24,56 @@ const Login = () => {
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                console.log(user);
+                // console.log(user);
+                setLoading(false)
                 navigate(from, { replace: true })
                 // ...
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorMessage);
+                // console.log(errorMessage);
+                setError(errorMessage)
             });
     }
 
     return (
-        <div className="min-h-screen  bg-purple-300 bg-opacity-10  flex flex-col justify-center items-center">
+        <div className="min-h-screen w-full bg-purple-300 bg-opacity-10  flex flex-col justify-center items-center">
+            {
+                loading ? <span className="loading loading-bars loading-lg"></span> : <div className="min-h-screen  w-full flex flex-col justify-center items-center">
 
-            <form onSubmit={handleLogin} className=" w-1/4 py-16 px-5 shadow-xl rounded-2xl gap-y-2  border bg-white   flex flex-col justify-center items-center" action="">
-                <h1 className="text-4xl  mb-5">Login Now</h1>
+                {
+                    error ? <p className="text-lg">{error}</p> : <form onSubmit={handleLogin} className=" w-1/4 py-16 px-5 shadow-xl rounded-2xl gap-y-2  border bg-white   flex flex-col justify-center items-center" action="">
+                        <h1 className="text-4xl  mb-5">Login Now</h1>
 
 
-                {/* input field */}
-                <div className="form-control w-full ">
-                    <label className="label">
-                        <span className="label-text">email</span>
+                        {/* input field */}
+                        <div className="form-control w-full ">
+                            <label className="label">
+                                <span className="label-text">email</span>
 
-                    </label>
-                    <input type="email" name="email" placeholder="Type here" className="input input-bordered w-full " />
+                            </label>
+                            <input type="email" required name="email" placeholder="Type here" className="input input-bordered w-full " />
 
-                </div>
-                {/* input field */}
-                <div className="form-control w-full">
-                    <label className="label">
-                        <span className="label-text">password</span>
+                        </div>
+                        {/* input field */}
+                        <div className="form-control w-full">
+                            <label className="label">
+                                <span className="label-text">password</span>
 
-                    </label>
-                    <input type="password" name="password" placeholder="Type here" className="input input-bordered w-full" />
+                            </label>
+                            <input type="password" required name="password" placeholder="Type here" className="input input-bordered w-full" />
 
-                </div>
-                <div className="w-full mt-5 ">
-                    <button className="btn w-full text-white bg-purple-500"> Register</button>
-                </div>
-            </form>
+                        </div>
+                        <div className="w-full my-5 ">
+                            <button className="btn w-full text-white bg-purple-500"> login</button>
+                        </div>
+                        <Link to={'/signUP'} ><p>create an account</p></Link>
+                        <Link to={'/resetPassword'} ><p className="text-blue-500">Forget Password?</p></Link>
+                    </form>
+                }
+            </div>
+            }
         </div>
     );
 };

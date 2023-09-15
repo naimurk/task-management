@@ -14,6 +14,7 @@ import AddNewTask from './Pages/Home/AddNewTask/AddNewTask';
 import IndividualTask from './Pages/IndividualTask/IndividualTask';
 import Provider from './Provider/Provider';
 import DataFetchState from './DataFetchState/DataFetchState';
+import ForgetPassword from './Pages/ForgetPassword/ForgetPassword';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login></Login>,
+  },
+  {
+    path: "/resetPassword",
+    element: <ForgetPassword></ForgetPassword>,
   },
 ]);
 

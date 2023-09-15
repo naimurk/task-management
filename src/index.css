@@ -5,3 +5,7 @@
 #outlet{
     height: calc(100vh - 50px);
 }
+
+.active {
+    color: red; /* Set your desired active link color */
+  }

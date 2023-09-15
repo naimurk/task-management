@@ -7,13 +7,12 @@ import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDk_3qev81qWTLagcSeBTSYE8LtX5zvrqA",
-  authDomain: "task-managment-3bc6c.firebaseapp.com",
-  databaseURL: "https://task-managment-3bc6c-default-rtdb.firebaseio.com",
-  projectId: "task-managment-3bc6c",
-  storageBucket: "task-managment-3bc6c.appspot.com",
-  messagingSenderId: "854426294841",
-  appId: "1:854426294841:web:f7ae18e72bb73efd2ccbe8"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId
 };
 
 // Initialize Firebase
