@@ -43,7 +43,7 @@ const Login = () => {
                 loading ? <span className="loading loading-bars loading-lg"></span> : <div className="min-h-screen  w-full flex flex-col justify-center items-center">
 
                 {
-                    error ? <p className="text-lg">{error}</p> : <form onSubmit={handleLogin} className=" w-1/4 py-16 px-5 shadow-xl rounded-2xl gap-y-2  border bg-white   flex flex-col justify-center items-center" action="">
+                    error ? <p className="text-lg">{error}</p> : <form onSubmit={handleLogin} className=" w-full lg:w-1/4 py-16 px-5 shadow-xl rounded-2xl gap-y-2  border bg-white   flex flex-col justify-center items-center" action="">
                         <h1 className="text-4xl  mb-5">Login Now</h1>
 
 
@@ -66,7 +66,7 @@ const Login = () => {
 
                         </div>
                         <div className="w-full my-5 ">
-                            <button className="btn w-full text-white bg-purple-500"> login</button>
+                            <button className="btn w-full hover:bg-neutral text-white bg-purple-500"> login</button>
                         </div>
                         <Link to={'/signUP'} ><p>create an account</p></Link>
                         <Link to={'/resetPassword'} ><p className="text-blue-500">Forget Password?</p></Link>

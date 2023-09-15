@@ -6,6 +6,6 @@
     height: calc(100vh - 50px);
 }
 
-.active {
+.navbar a.active {
     color: red; /* Set your desired active link color */
   }

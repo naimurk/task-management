@@ -18,8 +18,8 @@ const Navbar = () => {
     }
     return (
         <div className="navbar flex justify-center items-center gap-x-7 text-lg bg-neutral text-neutral-content">
-            <NavLink activeClassName = "active" to={'/'}><li className="list-none">Home</li></NavLink>
-            <NavLink activeClassName = "active" to={user?.email ? "/addNewTask": '/login'}><li  className="list-none">Add new Task</li></NavLink>
+            <NavLink  to={'/'}><li className="list-none">Home</li></NavLink>
+            <NavLink  to={user?.email ? "/addNewTask": '/login'}><li  className="list-none">Add new Task</li></NavLink>
             {
                 user?.email ? <li  className="list-none cursor-pointer" onClick={handleLogout}>LogOut</li>: <Link to={'/login'}><li  className="list-none">Login</li></Link>
             }

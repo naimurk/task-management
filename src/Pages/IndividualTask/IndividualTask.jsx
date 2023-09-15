@@ -3,9 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { database } from "../../firebase/firebase.config";
 import { FetchContext } from "../../DataFetchState/DataFetchState";
+import { ProviderContext } from "../../Provider/Provider";
 
 
 const IndividualTask = () => {
+    const {user}= useContext(ProviderContext)
     const { id } = useParams();
     const [fetchData , setFetchData]=useContext(FetchContext)
    const navigate = useNavigate()
@@ -32,6 +34,7 @@ const IndividualTask = () => {
                     const data = snapshot.val();
                     // console.log(data);
                     setAllUsersData(Object.values(data));
+                    setFetchData(!fetchData)
                 } else {
                     console.log("No data available");
                 }
@@ -59,8 +62,10 @@ const IndividualTask = () => {
             });
     }, [fetchData])
 
+
     // console.log(individualTask);
     const handleChanges = (e) => {
+        
         setFormData({ ...formData, [e.target.name]: e.target.value })
         // console.log(formData);
     }
@@ -106,7 +111,7 @@ const IndividualTask = () => {
     return (
         <div className="min-h-screen  bg-purple-300 bg-opacity-10  flex flex-col justify-center items-center">
 
-            <div className="mt-12  w-1/2 py-16 px-5 shadow-xl rounded-2xl gap-y-3 border bg-white">
+            <div className="mt-12 w-full lg:w-1/2 py-16 px-5 shadow-xl rounded-2xl gap-y-3 border bg-white">
                 {
                     loding ? <span className="loading loading-bars loading-lg"></span> : <form onSubmit={handleSubmit} className=" w-full   flex flex-col justify-center items-center" action="">
                         <h1 className="text-4xl  mb-5">Edit a task</h1>

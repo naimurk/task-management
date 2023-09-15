@@ -10,8 +10,10 @@ const AddNewTask = () => {
 
     const [AllUsersData, setAllUsersData] = useState([])
     const [loding, setLoading] = useState(false)
-    
+    const {user} = useContext(ProviderContext)
    const [fetchData , setFetchData]=useContext(FetchContext)
+
+
 
     useEffect(() => {
         const dbRef = ref(database, "users"); // Create a reference to the "users" node
@@ -28,8 +30,8 @@ const AddNewTask = () => {
             .catch((error) => {
                 console.error(error);
             });
-    }, [fetchData])
-
+    }, [fetchData,user])
+//  console.log(AllUsersData);
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -58,10 +60,10 @@ const AddNewTask = () => {
     }
     // console.log(AllUsersData);
     return (
-        <div className="min-h-screen  bg-purple-300 bg-opacity-10  flex flex-col justify-center items-center">
+        <div className="min-h-screen w-full bg-purple-300 bg-opacity-10  flex flex-col justify-center items-center">
 
             {
-                loding ? <span className="loading loading-bars loading-lg"></span> : <form onSubmit={handleSubmit} className=" mt-12  w-1/2 py-16 px-5 shadow-xl rounded-2xl gap-y-3 border bg-white   flex flex-col justify-center items-center" action="">
+                loding ? <span className="loading loading-bars loading-lg"></span> : <form onSubmit={handleSubmit} className=" mt-12 w-full  lg:w-1/2 py-16 px-5 shadow-xl rounded-2xl gap-y-3 border bg-white   flex flex-col justify-center items-center" action="">
                     <h1 className="text-4xl  mb-5">Create a task</h1>
                     {/* input field */}
                     <div className="form-control w-full">
@@ -92,7 +94,7 @@ const AddNewTask = () => {
 
                             </label>
                             <select name="status" className="select select-bordered w-full max-w-xs">
-                                <option disabled selected>Select Status</option>
+                                {/* <option disabled selected>Select Status</option> */}
                                 <option value={"todo"} >To do</option>
                                 <option value={"progress"}>In progress</option>
                                 <option value={'done'}>Done</option>
@@ -106,7 +108,7 @@ const AddNewTask = () => {
 
                             </label>
                             <select name="assigned_user" className="select select-bordered w-full max-w-xs">
-                                <option disabled selected>Select user</option>
+                                {/* <option disabled selected>Select user</option> */}
                                 {
                                     AllUsersData && AllUsersData.map(item => <option
                                         key={item.id}

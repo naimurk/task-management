@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 import TaskCard from "../../Component/TaskCard/TaskCard";
 import { useContext, useEffect, useState } from "react";
 import { get, ref } from "firebase/database";
@@ -15,6 +15,8 @@ const Home = () => {
     const [doneData, setTodoneData] = useState([])
     const [fetchData, setFetchData] = useContext(FetchContext)
     const { user } = useContext(ProviderContext)
+
+ 
 
     useEffect(() => {
         const dbRef = ref(database, "tasks"); // Create a reference to the "users" node
@@ -58,9 +60,6 @@ const Home = () => {
         setTodoneData(doneDatas)
         setLoading(false)
     }, [AlltaskData, fetchData])
-    // console.log(todoData);
-    // console.log(progressData);
-    // console.log(doneData);
     return (
         <div className="flex justify-center px-3 items-center">
 
